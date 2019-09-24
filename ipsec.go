@@ -14,7 +14,7 @@ import (
 func main() {
 
     reader := bufio.NewReader(os.Stdin)
-    fmt.Println("Do you have your CSVs loaded? (y/n)")
+    println("Do you have your CSVs loaded? (y/n)")
   
     for {
       fmt.Print("-> ")
@@ -23,7 +23,7 @@ func main() {
       text = strings.Replace(text, "\n", "", -1)
   
       if strings.Compare("y", text) == 0 {
-        fmt.Println("LET'S GO!!!")
+        println("LET'S GO!!!")
 
     //open csv files
         localAddr, err := ReadCsv("localObjects.csv")
@@ -47,11 +47,11 @@ func main() {
             if i < csvLengthLocal{
                netType := localAddr[i+1][2]
                if netType == "" {
-                fmt.Println("object network", localAddr[i+1][1])
-                fmt.Println("host", localAddr[i+1][0])
+                println("object network", localAddr[i+1][1])
+                println("host", localAddr[i+1][0])
                } else if netType != ""{
-                fmt.Println("object network", localAddr[i+1][1])
-                fmt.Println("subnet", localAddr[i+1][0])
+                println("object network", localAddr[i+1][1])
+                println("subnet", localAddr[i+1][0])
                }
                i++
             }   
@@ -64,11 +64,11 @@ func main() {
             if i < csvLengthRemote{
                netType := remoteAddr[i+1][2]
                if netType == "" {
-                fmt.Println("object network", remoteAddr[i+1][1])
-                fmt.Println("host", remoteAddr[i+1][0])
+                println("object network", remoteAddr[i+1][1])
+                println("host", remoteAddr[i+1][0])
                } else if netType != ""{
-                fmt.Println("object network", remoteAddr[i+1][1])
-                fmt.Println("subnet", remoteAddr[i+1][0])
+                println("object network", remoteAddr[i+1][1])
+                println("subnet", remoteAddr[i+1][0])
                }
                i++
             }   
@@ -79,45 +79,45 @@ func main() {
         remoteGroupName := "VPN_" + vpnForm[1][1] + "_REMOTE"
 
         //local object group
-        fmt.Println("object-group network", localGroupName)
+        println("object-group network", localGroupName)
         for i := range localAddr  {
             if i < csvLengthLocal{
-                fmt.Println(" network-object object", localAddr[i+1][1])
+                println(" network-object object", localAddr[i+1][1])
                i++
             }
               
         }
-        fmt.Println("exit")
+        println("exit")
         
         //remote object group
-        fmt.Println("object-group network", remoteGroupName)
+        println("object-group network", remoteGroupName)
         for i := range remoteAddr  {
             if i < csvLengthRemote{
-                fmt.Println(" network-object object", remoteAddr[i+1][1])
+                println(" network-object object", remoteAddr[i+1][1])
                 i++
             }
                
         }
-        fmt.Println("exit")
+        println("exit")
           
     //crypto-map ACL creation
         cmapACL := "VPN_" + vpnForm[1][1] + "_CMAP"        
-        fmt.Println("access-list", cmapACL, "extended permit ip object-group", localGroupName, "object-group", remoteGroupName)
+        println("access-list", cmapACL, "extended permit ip object-group", localGroupName, "object-group", remoteGroupName)
 
     //vpn-filter ACL creation
         filterACL := "VPN_" + vpnForm[1][1] + "_FLTR"
-        fmt.Println("access-list", filterACL, "extended deny ip any any")
+        println("access-list", filterACL, "extended deny ip any any")
         
     //group-policy creation
         policyName := "VPN_"+ vpnForm[1][1] + "_POLICY"
-        fmt.Println("group-policy", policyName, "internal")
-        fmt.Println("group-policy", policyName, "attributes")
-        fmt.Println(" vpn-filter value", filterACL)
+        println("group-policy", policyName, "internal")
+        println("group-policy", policyName, "attributes")
+        println(" vpn-filter value", filterACL)
 
     //determine IKE version
         ikeVer := vpnForm[1][2]
         if ikeVer == "1"{
-            fmt.Println(" vpn-tunnel-protocol ikev1")
+            println(" vpn-tunnel-protocol ikev1")
         } else if ikeVer =="2"{
             print(" vpn-tunnel-protocol ikev2")
         } else { 
@@ -136,20 +136,20 @@ func main() {
         if secondaryIP != ""{
             secondaryConf = true
             //primary
-            fmt.Println("\ntunnel-group", peerIP, "type ipsec-l2l")
-            fmt.Println("tunnel-group", peerIP, "general-attributes")
-            fmt.Println(" default-group-policy", policyName)
-            fmt.Println("tunnel-group", peerIP, "ipsec-attributes")
-            fmt.Println(" ikev1 pre-shared-key", secret1)
-            fmt.Println("exit")
+            println("\ntunnel-group", peerIP, "type ipsec-l2l")
+            println("tunnel-group", peerIP, "general-attributes")
+            println(" default-group-policy", policyName)
+            println("tunnel-group", peerIP, "ipsec-attributes")
+            println(" ikev1 pre-shared-key", secret1)
+            println("exit")
 
             //secondary
-            fmt.Println("\ntunnel-group", secondaryIP, "type ipsec-l2l")
-            fmt.Println("tunnel-group", secondaryIP, "general-attributes")
-            fmt.Println(" default-group-policy", policyName)
-            fmt.Println("tunnel-group", secondaryIP, "ipsec-attributes")
-            fmt.Println(" ikev1 pre-shared-key", secret2)
-            fmt.Println("exit")
+            println("\ntunnel-group", secondaryIP, "type ipsec-l2l")
+            println("tunnel-group", secondaryIP, "general-attributes")
+            println(" default-group-policy", policyName)
+            println("tunnel-group", secondaryIP, "ipsec-attributes")
+            println(" ikev1 pre-shared-key", secret2)
+            println("exit")
         } else {
             println("\ntunnel-group", peerIP, "type ipsec-l2l")
             println("tunnel-group", peerIP, "general-attributes")
@@ -206,14 +206,14 @@ func main() {
 
 
       } else if strings.Compare("n", text) == 0 {
-          fmt.Println("Why are you here?!")
+          println("Why are you here?!")
       } else {
-          fmt.Println("An error as occured. Exiting...")
+          println("An error as occured. Exiting...")
       }
   
     }
   
-  }
+}
 
 
 // ReadCsv accepts a file and returns its content as a multi-dimentional type
