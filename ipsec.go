@@ -23,7 +23,7 @@ func main() {
       text = strings.Replace(text, "\n", "", -1)
   
       if strings.Compare("y", text) == 0 {
-        println("LET'S GO!!!")
+        println("LET'S GO!!!\n")
 
     //open csv files
         localAddr, err := ReadCsv("localObjects.csv")
@@ -130,8 +130,8 @@ func main() {
         secondaryConf := false
         peerIP := vpnForm[1][3]
         secondaryIP := vpnForm[1][4]
-        secret1 := "abcdefg"
-        secret2 := "hijklmn"
+        secret1 := "<INSERT PSK HERE>"
+        secret2 := "<INSERT PSK HERE>"
 
         if secondaryIP != ""{
             secondaryConf = true
@@ -201,14 +201,18 @@ func main() {
             println("crypto map", outsideMapName, cmapIndex, "set peer", peerIP)
         }
 
+        println("\nWe're finished and done!")
+        os.Exit(0)
 
 
 
 
       } else if strings.Compare("n", text) == 0 {
           println("Why are you here?!")
+          os.Exit(0)
       } else {
           println("An error as occured. Exiting...")
+          os.Exit(1)
       }
   
     }
