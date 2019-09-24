@@ -1,0 +1,3 @@
+ipAddress,hostname,subnetMask
+10.40.0.0,remote-network,255.255.0.0
+10.25.0.0,remote-network2,255.255.255.0
