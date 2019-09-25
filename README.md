@@ -16,8 +16,12 @@ Run the ipsec program to generate the code:
 
 `go run ipsec.go`
 
+Password Generator forked from: https://github.com/sethvargo/go-password
+
+It can be installed like this:
+
+`$ go get -u github.com/sethvargo/go-password/password`
+
 Optionally, you can build `ipsec.go` into an executable:
 
 `go build ipsec.go`
-
-Password Generator forked from: https://github.com/sethvargo/go-password
