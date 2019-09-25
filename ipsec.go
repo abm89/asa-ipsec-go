@@ -7,11 +7,17 @@ import (
     "bufio"
     "strings"
     "fmt"
+    "log"
     "os"
+
+    "github.com/sethvargo/go-password/password"
 )
 
 
 func main() {
+
+
+
 
     reader := bufio.NewReader(os.Stdin)
     println("Do you have your CSVs loaded? (y/n)")
@@ -40,7 +46,7 @@ func main() {
         }
         
 
-        csvLengthLocal := len(localAddr) - 1
+        csvLengthLocal := len(localAddr) - 1   //This allows for reading the CSV file and skipping the header on row 1
 
     //local object creation   
         for i := range localAddr  {
@@ -127,11 +133,20 @@ func main() {
         print("exit")
         
     //tunnel-group config
+        //generate PSKs
+        secret1, err := password.Generate(15, 5, 5, false, false) //Usage: (length,numbers,symbols,allow-uppercase,allow repeat characters)
+        if err != nil {
+            log.Fatal(err)
+        }
+        secret2, err := password.Generate(15, 5, 5, false, false) 
+        if err != nil {
+            log.Fatal(err)
+        }
+
         secondaryConf := false
         peerIP := vpnForm[1][3]
         secondaryIP := vpnForm[1][4]
-        secret1 := "<INSERT PSK HERE>"
-        secret2 := "<INSERT PSK HERE>"
+
 
         if secondaryIP != ""{
             secondaryConf = true
